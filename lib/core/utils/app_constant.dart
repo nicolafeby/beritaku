@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppConstant {
-  static const String baseUrl = 'https://newsapi.org';
+  static const String baseUrl = 'https://newsapi.org/v2';
 
   static String imageUrl(pokeId) =>
       'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$pokeId.png';

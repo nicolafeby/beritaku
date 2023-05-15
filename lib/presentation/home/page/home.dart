@@ -1,9 +1,24 @@
 import 'package:beritaku/presentation/home/widget/home_appbar.dart';
+import 'package:beritaku/presentation/home/widget/home_carousel_headline.dart';
 import 'package:beritaku/presentation/home/widget/home_drawer.dart';
+import 'package:beritaku/presentation/home/widget/home_news_list.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
+
+  _handleOnChangedBanner(index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +30,14 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildBody() {
-    return Column(
-      children: const [],
+    return ListView(
+      children: [
+        HomeCarouselHeadline(
+          selectedIndex: _selectedIndex,
+          onChangedBanner: _handleOnChangedBanner,
+        ),
+        const HomeNewsList()
+      ],
     );
   }
 }
