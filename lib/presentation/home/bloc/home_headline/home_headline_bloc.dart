@@ -25,6 +25,7 @@ class HomeHeadlineBloc extends Bloc<HomeHeadlineEvent, HomeHeadlineState> {
       apiKey: AppConstant.apiKey,
       language: event.arg.language,
       country: event.arg.country,
+      category: event.arg.category,
     );
 
     final resp = await usecase.call(params);

@@ -4,7 +4,7 @@ class AppConstant {
   static const String baseUrl = 'https://newsapi.org/v2';
 
   static String apiKey =
-      'c3c8e3a211ed419c8da525aedac6625f'; //'6b47b9ef8b12413dbb9b3fb54123a84b';
+      '7ab71851af7945b5b1b2c7429d8d615f'; //'6b47b9ef8b12413dbb9b3fb54123a84b';
 }
 
 class AssetsConstant {

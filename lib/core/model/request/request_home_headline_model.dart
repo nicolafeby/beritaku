@@ -6,11 +6,13 @@ class RequestHomeHeadlineModel {
   final String? apiKey;
   final String? country;
   final String? language;
+  final String? category;
 
   RequestHomeHeadlineModel({
     this.apiKey,
     this.country,
     this.language,
+    this.category,
   });
 
   factory RequestHomeHeadlineModel.fromJson(Map<String, dynamic> json) =>

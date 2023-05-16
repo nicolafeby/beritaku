@@ -16,7 +16,7 @@ class HomeNewsList extends StatelessWidget {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: 10,
+      itemCount: entities.articles?.length ?? 0,
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
       separatorBuilder: (BuildContext context, int index) {
         return const SizedBox(height: 12.0);

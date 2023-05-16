@@ -32,7 +32,10 @@ class _CategoryFilterState extends State<CategoryFilter> {
               ?.copyWith(color: Colors.black, fontWeight: FontWeight.w700),
         ),
         leading: InkWell(
-          onTap: () => Navigator.pop(context),
+          onTap: () {
+            var data = const CategoryFilterArg(category: CategoryEnum.none);
+            Navigator.pop(context, data);
+          },
           child: const Icon(Icons.close),
         ),
       ),

@@ -12,6 +12,7 @@ RequestHomeHeadlineModel _$RequestHomeHeadlineModelFromJson(
       apiKey: json['apiKey'] as String?,
       country: json['country'] as String?,
       language: json['language'] as String?,
+      category: json['category'] as String?,
     );
 
 Map<String, dynamic> _$RequestHomeHeadlineModelToJson(
@@ -20,4 +21,5 @@ Map<String, dynamic> _$RequestHomeHeadlineModelToJson(
       'apiKey': instance.apiKey,
       'country': instance.country,
       'language': instance.language,
+      'category': instance.category,
     };
