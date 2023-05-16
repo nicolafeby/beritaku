@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class AppConstant {
   static const String baseUrl = 'https://newsapi.org/v2';
 
-  static String apiKey = '6b47b9ef8b12413dbb9b3fb54123a84b';
+  static String apiKey =
+      'c3c8e3a211ed419c8da525aedac6625f'; //'6b47b9ef8b12413dbb9b3fb54123a84b';
 }
 
 class AssetsConstant {

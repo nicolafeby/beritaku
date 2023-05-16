@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 
 class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const HomeAppbar({super.key});
+  final Function() onPressed;
+  const HomeAppbar({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      leading: IconButton(
+        icon: const Icon(
+          Icons.menu,
+          color: Colors.grey,
+        ),
+        onPressed: onPressed,
+      ),
       elevation: 0,
       backgroundColor: Colors.white,
       title: Text(

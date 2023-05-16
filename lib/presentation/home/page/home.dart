@@ -1,9 +1,13 @@
+import 'package:beritaku/core/enum/category_enum.dart';
+import 'package:beritaku/core/model/argument/category_filter_arg.dart';
 import 'package:beritaku/core/model/argument/home_headline_arg.dart';
+import 'package:beritaku/core/router/router_constant.dart';
 import 'package:beritaku/presentation/home/bloc/home_everything/home_everything_bloc.dart';
 import 'package:beritaku/presentation/home/bloc/home_headline/home_headline_bloc.dart';
 import 'package:beritaku/presentation/home/widget/home_appbar.dart';
 import 'package:beritaku/presentation/home/widget/home_carousel_headline.dart';
 import 'package:beritaku/presentation/home/widget/home_drawer.dart';
+import 'package:beritaku/presentation/home/widget/home_floating_button.dart';
 import 'package:beritaku/presentation/home/widget/home_news_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,6 +23,9 @@ class _HomePageState extends State<HomePage> {
   late HomeHeadlineBloc _headlineBloc;
   late HomeEverythingBloc _everythingBloc;
   int _selectedIndex = 0;
+  CategoryFilterArg? selectedCategory;
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -47,9 +54,33 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const HomeAppbar(),
-      drawer: const HomeDrawer(),
+      key: _scaffoldKey,
+      appBar: HomeAppbar(
+        onPressed: () {
+          _scaffoldKey.currentState?.openDrawer();
+        },
+      ),
+      drawer: InkWell(
+        onTap: () {},
+        child: const HomeDrawer(),
+      ),
       body: _buildBody(),
+      floatingActionButton: HomeFloatingButton(
+        onTap: () async {
+          final data =
+              await Navigator.pushNamed(context, RouterConstant.categoryFilter);
+          selectedCategory = data as CategoryFilterArg?;
+          if (selectedCategory?.category != CategoryEnum.none) {
+            // _everythingBloc.add(
+            //   const HomeEverythingStarted(
+            //     arg: HomeEverythingArg(
+
+            //     ),
+            //   ),
+            // );
+          }
+        },
+      ),
     );
   }
 
@@ -67,6 +98,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             (state as HomeHeadlineLoadInSuccess);
+
             return HomeCarouselHeadline(
               selectedIndex: _selectedIndex,
               onChangedBanner: _handleOnChangedBanner,
@@ -84,7 +116,9 @@ class _HomePageState extends State<HomePage> {
               return const Text('error load data');
             }
             (state as HomeEverythingLoadInSuccess);
-            return HomeNewsList(entities: state.entities);
+            return HomeNewsList(
+              entities: state.entities,
+            );
           },
         )
       ],

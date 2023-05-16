@@ -1,3 +1,5 @@
+import 'package:beritaku/core/model/argument/detail_arg.dart';
+import 'package:beritaku/core/router/router_constant.dart';
 import 'package:beritaku/domain/home_everything/entities/home_everything_entities.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -20,23 +22,35 @@ class HomeNewsList extends StatelessWidget {
         return const SizedBox(height: 12.0);
       },
       itemBuilder: (BuildContext context, int index) {
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildImage(entities, index),
-            const SizedBox(width: 12.0),
-            Flexible(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildTitle(context, entities, index),
-                  _buildDesc(context, entities, index),
-                  _buildAuthor(context, entities, index)
-                ],
-              ),
-            )
-          ],
+        return InkWell(
+          onTap: () => Navigator.pushNamed(
+            context,
+            RouterConstant.detailWebview,
+            arguments: DetailArg(
+              url: entities.articles?[index].url ?? '',
+            ),
+          ),
+          child: Container(
+            color: Colors.transparent,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildImage(entities, index),
+                const SizedBox(width: 12.0),
+                Flexible(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildTitle(context, entities, index),
+                      _buildDesc(context, entities, index),
+                      _buildAuthor(context, entities, index)
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
         );
       },
     );

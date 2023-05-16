@@ -1,3 +1,5 @@
+import 'package:beritaku/core/model/argument/detail_arg.dart';
+import 'package:beritaku/core/router/router_constant.dart';
 import 'package:beritaku/core/utils/app_constant.dart';
 import 'package:beritaku/domain/home_headline/entities/home_headline_entities.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -44,17 +46,16 @@ class HomeCarouselHeadline extends StatelessWidget {
       ),
       itemBuilder: (context, itemIndex, dpageViewIndex) {
         final data = entities.articles?[itemIndex];
+        // log(data!.urlToImage.toString());
         return GestureDetector(
           onTap: () async {
-            // final link = data[index].banner![itemIndex].link;
-            // if (link == null) return;
-
-            // if (!link.startsWith('https')) return;
-
-            // await launchUrl(
-            //   Uri.parse(link),
-            //   mode: LaunchMode.externalApplication,
-            // );
+            Navigator.pushNamed(
+              context,
+              RouterConstant.detailWebview,
+              arguments: DetailArg(
+                url: data?.url ?? '',
+              ),
+            );
           },
           child: AspectRatio(
             aspectRatio: 16 / 9,
@@ -74,6 +75,8 @@ class HomeCarouselHeadline extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16.0),
                         child: CachedNetworkImage(
+                          errorWidget: (context, url, error) =>
+                              const SizedBox(),
                           imageUrl: data?.urlToImage ??
                               'https://dummyimage.com/600x400/000/fff',
                         ),
