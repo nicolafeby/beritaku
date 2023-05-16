@@ -1,8 +1,12 @@
+import 'package:beritaku/core/model/argument/home_headline_argument.dart';
+import 'package:beritaku/core/utils/app_constant.dart';
+import 'package:beritaku/presentation/home/bloc/home_headline/home_headline_bloc.dart';
 import 'package:beritaku/presentation/home/widget/home_appbar.dart';
 import 'package:beritaku/presentation/home/widget/home_carousel_headline.dart';
 import 'package:beritaku/presentation/home/widget/home_drawer.dart';
 import 'package:beritaku/presentation/home/widget/home_news_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,7 +16,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late HomeHeadlineBloc _headlineBloc;
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    _headlineBloc = BlocProvider.of(context);
+    _headlineBloc.add(
+      HomeHeadlineStarted(
+        arg: HomeHeadlineArg(
+          apiKey: AppConstant.apiKey,
+          country: 'us',
+          language: 'en',
+        ),
+      ),
+    );
+    super.initState();
+  }
 
   _handleOnChangedBanner(index) {
     setState(() {
@@ -30,14 +50,29 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildBody() {
-    return ListView(
-      children: [
-        HomeCarouselHeadline(
-          selectedIndex: _selectedIndex,
-          onChangedBanner: _handleOnChangedBanner,
-        ),
-        const HomeNewsList()
-      ],
+    return BlocBuilder<HomeHeadlineBloc, HomeHeadlineState>(
+      builder: (context, state) {
+        if (state is HomeHeadlineInProgress) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state is HomeHeadlineLoadInFailure) {
+          return const Text('error load data');
+        }
+
+        (state as HomeHeadlineLoadInSuccess);
+
+        return ListView(
+          children: [
+            HomeCarouselHeadline(
+              selectedIndex: _selectedIndex,
+              onChangedBanner: _handleOnChangedBanner,
+              entities: state.entities,
+            ),
+            const HomeNewsList()
+          ],
+        );
+      },
     );
   }
 }

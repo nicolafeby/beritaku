@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 class AppConstant {
   static const String baseUrl = 'https://newsapi.org/v2';
 
-  static String imageUrl(pokeId) =>
-      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$pokeId.png';
+  static String apiKey = '6b47b9ef8b12413dbb9b3fb54123a84b';
 }
 
 class AssetsConstant {
