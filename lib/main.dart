@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: _buildTheme(Brightness.light),
       debugShowCheckedModeBanner: false,
       onGenerateRoute: router.Router().generateAppRoutes,
-      initialRoute: RouterConstant.homeNewsList,
+      initialRoute: RouterConstant.splashScreen,
     );
   }
 }

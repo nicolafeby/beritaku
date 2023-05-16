@@ -1,13 +1,14 @@
-import 'package:beritaku/domain/home_headline/entities/home_headline_entities.dart';
+import 'package:beritaku/domain/home_everything/entities/home_everything_entities.dart';
 import 'package:json_annotation/json_annotation.dart';
-part 'home_headline_model.g.dart';
+
+part 'home_everything_model.g.dart';
 
 @JsonSerializable()
-class HomeHeadlineModel extends HomeHeadlineEntities {
+class HomeEverythingModel extends HomeEverythingEntities {
   @JsonKey(name: 'articles')
   final List<ArticlesModel>? articlesModel;
 
-  HomeHeadlineModel({
+  HomeEverythingModel({
     required String? status,
     required int? totalResults,
     required this.articlesModel,
@@ -17,10 +18,10 @@ class HomeHeadlineModel extends HomeHeadlineEntities {
           articles: articlesModel,
         );
 
-  factory HomeHeadlineModel.fromJson(Map<String, dynamic> json) =>
-      _$HomeHeadlineModelFromJson(json);
+  factory HomeEverythingModel.fromJson(Map<String, dynamic> json) =>
+      _$HomeEverythingModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$HomeHeadlineModelToJson(this);
+  Map<String, dynamic> toJson() => _$HomeEverythingModelToJson(this);
 }
 
 @JsonSerializable()

@@ -1,8 +1,13 @@
+import 'package:beritaku/domain/home_everything/entities/home_everything_entities.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class HomeNewsList extends StatelessWidget {
-  const HomeNewsList({super.key});
+  final HomeEverythingEntities entities;
+  const HomeNewsList({
+    super.key,
+    required this.entities,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +23,16 @@ class HomeNewsList extends StatelessWidget {
         return Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildImage(),
+            _buildImage(entities, index),
             const SizedBox(width: 12.0),
             Flexible(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildTitle(context),
-                  _buildDesc(context),
-                  _buildAuthor(context, 'Nicola')
+                  _buildTitle(context, entities, index),
+                  _buildDesc(context, entities, index),
+                  _buildAuthor(context, entities, index)
                 ],
               ),
             )
@@ -37,21 +42,23 @@ class HomeNewsList extends StatelessWidget {
     );
   }
 
-  Widget _buildImage() {
+  Widget _buildImage(HomeEverythingEntities entities, int index) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(12.0),
       child: CachedNetworkImage(
         fit: BoxFit.cover,
         height: 100,
         width: 100,
-        imageUrl: 'https://dummyimage.com/600x400/000/fff',
+        imageUrl: entities.articles?[index].urlToImage ??
+            'https://dummyimage.com/600x400/000/fff',
       ),
     );
   }
 
-  Widget _buildTitle(BuildContext context) {
+  Widget _buildTitle(
+      BuildContext context, HomeEverythingEntities entities, int index) {
     return Text(
-      "Title",
+      entities.articles?[index].title ?? '-',
       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
             fontSize: 16.0,
             fontWeight: FontWeight.w700,
@@ -59,9 +66,10 @@ class HomeNewsList extends StatelessWidget {
     );
   }
 
-  Widget _buildDesc(BuildContext context) {
+  Widget _buildDesc(
+      BuildContext context, HomeEverythingEntities entities, int index) {
     return Text(
-      "asu \n",
+      "${entities.articles?[index].description ?? '-'} \n",
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -71,9 +79,10 @@ class HomeNewsList extends StatelessWidget {
     );
   }
 
-  Widget _buildAuthor(BuildContext context, String author) {
+  Widget _buildAuthor(
+      BuildContext context, HomeEverythingEntities entities, int index) {
     return Text(
-      "by $author",
+      "by ${entities.articles?[index].author ?? '-'}",
       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
             fontSize: 14.0,
             color: Colors.grey,

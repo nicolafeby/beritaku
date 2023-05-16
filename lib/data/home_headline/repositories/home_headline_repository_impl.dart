@@ -1,8 +1,8 @@
 import 'package:beritaku/core/error/errors.dart';
 import 'package:beritaku/core/model/request/request_home_headline_model.dart';
-import 'package:beritaku/data/home/datasources/home_headline_remote_datasource.dart';
-import 'package:beritaku/domain/home/entities/home_headline_entities.dart';
-import 'package:beritaku/domain/home/repositories/home_headline_repository.dart';
+import 'package:beritaku/data/home_headline/datasources/home_headline_remote_datasource.dart';
+import 'package:beritaku/domain/home_headline/entities/home_headline_entities.dart';
+import 'package:beritaku/domain/home_headline/repositories/home_headline_repository.dart';
 import 'package:dartz/dartz.dart';
 
 class HomeHeadlineRepositoryImpl implements HomeHeadlineRepository {

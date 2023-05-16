@@ -7,7 +7,7 @@ class AppConstant {
 }
 
 class AssetsConstant {
-  // static const String imgPokemonImageTitle = 'assets/img_pokemon_title.png';
+  static const String imgNews = 'assets/imgNews.png';
 }
 
 class ColorConstant {

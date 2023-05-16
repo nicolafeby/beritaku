@@ -1,5 +1,5 @@
-import 'package:beritaku/core/model/argument/home_headline_argument.dart';
-import 'package:beritaku/core/utils/app_constant.dart';
+import 'package:beritaku/core/model/argument/home_headline_arg.dart';
+import 'package:beritaku/presentation/home/bloc/home_everything/home_everything_bloc.dart';
 import 'package:beritaku/presentation/home/bloc/home_headline/home_headline_bloc.dart';
 import 'package:beritaku/presentation/home/widget/home_appbar.dart';
 import 'package:beritaku/presentation/home/widget/home_carousel_headline.dart';
@@ -17,19 +17,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late HomeHeadlineBloc _headlineBloc;
+  late HomeEverythingBloc _everythingBloc;
   int _selectedIndex = 0;
 
   @override
   void initState() {
     _headlineBloc = BlocProvider.of(context);
+    _everythingBloc = BlocProvider.of(context);
     _headlineBloc.add(
-      HomeHeadlineStarted(
+      const HomeHeadlineStarted(
         arg: HomeHeadlineArg(
-          apiKey: AppConstant.apiKey,
           country: 'us',
           language: 'en',
         ),
       ),
+    );
+    _everythingBloc.add(
+      const HomeEverythingStarted(),
     );
     super.initState();
   }
@@ -50,29 +54,40 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildBody() {
-    return BlocBuilder<HomeHeadlineBloc, HomeHeadlineState>(
-      builder: (context, state) {
-        if (state is HomeHeadlineInProgress) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (state is HomeHeadlineLoadInFailure) {
-          return const Text('error load data');
-        }
+    return ListView(
+      children: [
+        BlocBuilder<HomeHeadlineBloc, HomeHeadlineState>(
+          builder: (context, state) {
+            if (state is HomeHeadlineInProgress) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is HomeHeadlineLoadInFailure) {
+              return const Text('error load data');
+            }
 
-        (state as HomeHeadlineLoadInSuccess);
-
-        return ListView(
-          children: [
-            HomeCarouselHeadline(
+            (state as HomeHeadlineLoadInSuccess);
+            return HomeCarouselHeadline(
               selectedIndex: _selectedIndex,
               onChangedBanner: _handleOnChangedBanner,
               entities: state.entities,
-            ),
-            const HomeNewsList()
-          ],
-        );
-      },
+            );
+          },
+        ),
+        BlocBuilder<HomeEverythingBloc, HomeEverythingState>(
+          builder: (context, state) {
+            if (state is HomeEverythingInProgress) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is HomeEverythingLoadInFailure) {
+              return const Text('error load data');
+            }
+            (state as HomeEverythingLoadInSuccess);
+            return HomeNewsList(entities: state.entities);
+          },
+        )
+      ],
     );
   }
 }

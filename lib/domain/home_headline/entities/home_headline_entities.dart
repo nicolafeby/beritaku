@@ -4,7 +4,7 @@ class HomeHeadlineEntities {
   String? status;
   int? totalResults;
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   List<ArticlesEntities>? articles;
 
   HomeHeadlineEntities({
@@ -15,7 +15,7 @@ class HomeHeadlineEntities {
 }
 
 class ArticlesEntities {
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   SourceEntities? source;
   String? author;
   String? title;

@@ -12,6 +12,7 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
         'Beritaku',
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.w700,
+              letterSpacing: 0.5,
             ),
       ),
       actions: [

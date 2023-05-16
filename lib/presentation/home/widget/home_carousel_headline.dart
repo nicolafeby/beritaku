@@ -1,7 +1,5 @@
-import 'dart:developer';
-
 import 'package:beritaku/core/utils/app_constant.dart';
-import 'package:beritaku/domain/home/entities/home_headline_entities.dart';
+import 'package:beritaku/domain/home_headline/entities/home_headline_entities.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +44,6 @@ class HomeCarouselHeadline extends StatelessWidget {
       ),
       itemBuilder: (context, itemIndex, dpageViewIndex) {
         final data = entities.articles?[itemIndex];
-        log(data!.urlToImage.toString());
         return GestureDetector(
           onTap: () async {
             // final link = data[index].banner![itemIndex].link;
@@ -73,15 +70,17 @@ class HomeCarouselHeadline extends StatelessWidget {
                   Banner(
                     location: BannerLocation.topStart,
                     message: 'Headline',
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16.0),
-                      child: CachedNetworkImage(
-                        imageUrl: data.urlToImage ??
-                            'https://dummyimage.com/600x400/000/fff',
+                    child: Center(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(16.0),
+                        child: CachedNetworkImage(
+                          imageUrl: data?.urlToImage ??
+                              'https://dummyimage.com/600x400/000/fff',
+                        ),
                       ),
                     ),
                   ),
-                  _buildTitle(data)
+                  _buildTitle(data ?? ArticlesEntities())
                 ],
               ),
             ),
@@ -121,30 +120,26 @@ class HomeCarouselHeadline extends StatelessWidget {
   }
 
   Widget _buildPageIndicator(HomeHeadlineEntities entities) {
-    return Positioned(
-      bottom: 24.0,
-      right: 24.0,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: List.generate(
-            entities.articles!.length >= 10 ? 10 : entities.articles!.length,
-            (itemIndex) {
-              // final data = entities.articles?[itemIndex];
-              return AnimatedContainer(
-                duration: const Duration(milliseconds: 150),
-                margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                height: 8.0,
-                width: selectedIndex == itemIndex ? 24 : 8.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6.0),
-                  color: selectedIndex == itemIndex
-                      ? ColorConstant.primary900
-                      : ColorConstant.light900,
-                ),
-              );
-            },
-          ),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: List.generate(
+          entities.articles!.length >= 10 ? 10 : entities.articles!.length,
+          (itemIndex) {
+            // final data = entities.articles?[itemIndex];
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 150),
+              margin: const EdgeInsets.symmetric(horizontal: 4.0),
+              height: 8.0,
+              width: selectedIndex == itemIndex ? 24 : 8.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6.0),
+                color: selectedIndex == itemIndex
+                    ? ColorConstant.primary900
+                    : ColorConstant.light900,
+              ),
+            );
+          },
         ),
       ),
     );
